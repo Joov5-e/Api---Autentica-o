@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Entrar | Homem-Aranha</title>
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+		:root {
+			--ink: #171721;
+			--muted: #71717d;
+			--paper: #f2f2f4;
+			--line: #d5d5dc;
+			--accent: #e3262e;
+			--accent-dark: #b7151d;
+			--deep: #101d45;
+		}
+
+		* { box-sizing: border-box; }
+
+		body {
+			min-height: 100vh;
+			margin: 0;
+			display: grid;
+			place-items: center;
+			padding: 32px 20px;
+			color: var(--ink);
+			background: var(--paper);
+			font-family: 'DM Sans', sans-serif;
+		}
+
+		@keyframes pop-in {
+			0% { opacity: 0; transform: translateY(28px) scale(0.96); }
+			70% { transform: translateY(-7px) scale(1.01); }
+			100% { opacity: 1; transform: translateY(0) scale(1); }
+		}
+
+		@keyframes float {
+			0%, 100% { transform: translateY(0) rotate(0deg); }
+			50% { transform: translateY(-12px) rotate(3deg); }
+		}
+
+		@keyframes drift {
+			0%, 100% { transform: translate(0, 0) scale(1); }
+			50% { transform: translate(-14px, 10px) scale(1.04); }
+		}
+
+		.page {
+			width: min(100%, 1000px);
+			min-height: 620px;
+			display: grid;
+			grid-template-columns: 1.15fr 0.85fr;
+			overflow: hidden;
+			border: 1px solid rgba(33, 24, 45, 0.12);
+			border-radius: 24px;
+			background: #fbfdff;
+			box-shadow: 0 24px 70px rgba(35, 18, 34, 0.2);
+			animation: pop-in 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+		}
+
+		.form-area { padding: 56px clamp(28px, 6vw, 76px); }
+		h1, h2, p { margin: 0; }
+		h1 {
+			margin-bottom: 8px;
+			font-family: 'Space Grotesk', sans-serif;
+			font-size: 2rem;
+			letter-spacing: -0.03em;
+		}
+		.subtitle { margin-bottom: 34px; color: var(--muted); font-size: 0.95rem; }
+		form { display: grid; gap: 20px; }
+		.field { display: grid; gap: 7px; }
+		label { font-size: 0.83rem; font-weight: 700; }
+		input {
+			width: 100%;
+			border: 1px solid var(--line);
+			border-radius: 2px;
+			padding: 14px 15px;
+			outline: none;
+			color: var(--ink);
+			background: #fcfbfe;
+			font: inherit;
+			transition: border-color 160ms ease, box-shadow 160ms ease;
+		}
+		input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(227, 38, 46, 0.18); }
+		button {
+			margin-top: 6px;
+			border: 0;
+			border-radius: 2px;
+			padding: 16px;
+			cursor: pointer;
+			color: #101629;
+			background: var(--accent);
+			font: inherit;
+			font-weight: 700;
+			transition: background 160ms ease, transform 160ms ease;
+		}
+		button:hover { background: var(--accent-dark); transform: translateY(-1px); }
+		.switch-button {
+			display: block;
+			margin-top: 2px;
+			border: 1px solid var(--accent);
+			border-radius: 2px;
+			padding: 13px 16px;
+			color: var(--accent-dark);
+			font-size: 0.9rem;
+			font-weight: 700;
+			text-align: center;
+			text-decoration: none;
+			transition: background 160ms ease, color 160ms ease;
+		}
+		.switch-button:hover { color: #101629; background: var(--accent); }
+		.visual {
+			position: relative;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			padding: 46px;
+			overflow: hidden;
+			color: #fff;
+			background: var(--deep);
+			background-image: radial-gradient(circle at 25% 25%, rgba(227, 38, 46, 0.3), transparent 34%), linear-gradient(145deg, #182b68, #080d22);
+		}
+		.visual::before, .visual::after {
+			position: absolute;
+			content: '';
+			border: 1px solid rgba(255, 255, 255, 0.2);
+			border-radius: 50%;
+			animation: drift 8s ease-in-out infinite;
+		}
+		.visual::before { width: 330px; height: 330px; right: -145px; top: 80px; }
+		.visual::after { width: 210px; height: 210px; left: -125px; bottom: -90px; animation-delay: -3s; }
+		.brand, .visual-copy, .mark { position: relative; z-index: 1; }
+		.brand { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; }
+		.visual-copy h2 {
+			max-width: 340px;
+			margin-bottom: 18px;
+			font-family: 'Space Grotesk', sans-serif;
+			font-size: clamp(2.5rem, 5vw, 4.3rem);
+			line-height: 0.98;
+			letter-spacing: -0.04em;
+		}
+		.visual-copy p { max-width: 310px; color: rgba(255, 255, 255, 0.76); line-height: 1.6; }
+		.mark {
+			width: 58px;
+			height: 58px;
+			display: grid;
+			place-items: center;
+			border: 1px solid rgba(255, 255, 255, 0.4);
+			border-radius: 50%;
+			color: #e3262e;
+			font-family: 'Space Grotesk', sans-serif;
+			font-size: 1.5rem;
+			animation: float 4s ease-in-out infinite;
+		}
+		@media (max-width: 700px) {
+			body { padding: 0; }
+			.page { min-height: 100vh; grid-template-columns: 1fr; border-radius: 0; }
+			.visual { min-height: 330px; padding: 30px 26px; }
+			.visual-copy h2 { font-size: 3rem; }
+			.mark { width: 44px; height: 44px; font-size: 1.15rem; }
+			.form-area { padding: 38px 26px 44px; }
+		}
+		@media (prefers-reduced-motion: reduce) {
+			*, *::before, *::after {
+				animation-duration: 0.01ms !important;
+				animation-iteration-count: 1 !important;
+				transition-duration: 0.01ms !important;
+			}
+		}
+	</style>
+</head>
+<body>
+	<main class="page">
+		<section class="form-area" aria-labelledby="form-title">
+			<h1 id="form-title">Bem-vindo de volta</h1>
+			<p class="subtitle">Entre para continuar sua jornada.</p>
+			<form>
+				<div class="field">
+					<label for="email">E-mail</label>
+					<input id="email" name="email" type="email" autocomplete="email" placeholder="voce@exemplo.com" required>
+				</div>
+				<div class="field">
+					<label for="password">Senha</label>
+					<input id="password" name="password" type="password" autocomplete="current-password" placeholder="Digite sua senha" required>
+				</div>
+				<button type="submit">Entrar</button>
+				<a class="switch-button" href="index.html">Criar uma conta</a>
+			</form>
+		</section>
+		<section class="visual" aria-labelledby="visual-title">
+			<span class="brand">SPIDER &middot; ACCESS</span>
+			<div class="visual-copy">
+				<h2 id="visual-title">Suba pelas paredes.</h2>
+				<p>Entre no seu painel e continue sua miss&atilde;o de descobrir novas habilidades.</p>
+			</div>
+			<span class="mark" aria-hidden="true">&#128375;</span>
+		</section>
+	</main>
+</body>
+</html>
